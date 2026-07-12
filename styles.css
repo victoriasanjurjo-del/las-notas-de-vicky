@@ -1,0 +1,127 @@
+/* Reseteo básico para asegurar consistencia en los navegadores */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Variables de color según tus requerimientos */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --primary-blue: #0056b3;
+    --hover-blue: #004494;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Barra de Navegación --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    background-color: var(--bg-color);
+    border-bottom: 3px solid var(--primary-blue); /* Detalle azul */
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* Botones de navegación */
+.nav-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: color 0.2s ease;
+}
+
+.nav-btn:hover {
+    color: var(--primary-blue);
+}
+
+/* Botón destacado en la navbar */
+.primary-btn {
+    background-color: var(--primary-blue);
+    color: var(--bg-color);
+    border-radius: 4px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 500;
+}
+
+.primary-btn:hover {
+    background-color: var(--hover-blue);
+    color: var(--bg-color);
+}
+
+/* --- Sección Hero --- */
+.hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 2.5rem;
+}
+
+/* Contenedor de los botones de acción */
+.hero-actions {
+    display: flex;
+    gap: 1.5rem;
+}
+
+/* Botones de acción principales */
+.action-btn {
+    background-color: var(--primary-blue);
+    color: var(--bg-color);
+    border: 2px solid var(--primary-blue);
+    border-radius: 6px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background-color: var(--hover-blue);
+    border-color: var(--hover-blue);
+}
+
+/* Botón secundario (derecho) con estilo de contorno para diferenciarlo levemente, 
+   manteniendo el azul solicitado */
+.outline-btn {
+    background-color: transparent;
+    color: var(--primary-blue);
+}
+
+.outline-btn:hover {
+    background-color: var(--primary-blue);
+    color: var(--bg-color);
+}
