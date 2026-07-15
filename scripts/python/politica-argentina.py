@@ -11,7 +11,7 @@ def son_similares(titulo1, titulo2, umbral=0.55):
 
 def obtener_noticias():
     # 1. Definimos la carpeta y el nombre del archivo con la fecha de hoy
-    carpeta_destino = "politica-argentina"
+    carpeta_destino = "noticias/politica-argentina"
     fecha_hoy = datetime.now().strftime("%Y-%m-%d")
     nombre_archivo = f"{fecha_hoy}.json"
     

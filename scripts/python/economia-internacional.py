@@ -1,4 +1,4 @@
-import feedparser # type: ignore
+import feedparser
 import json
 import urllib.parse
 import os
@@ -9,20 +9,20 @@ def son_similares(titulo1, titulo2, umbral=0.55):
     """Compara dos textos. Si la similitud supera el umbral, devuelve True."""
     return SequenceMatcher(None, titulo1.lower(), titulo2.lower()).ratio() > umbral
 
-def obtener_noticias_economia():
-    # 1. Definimos la carpeta y el nombre del archivo con la fecha de hoy
-    carpeta_destino = "noticias/economia-argentina"
+def obtener_noticias_economia_internacional():
+    # 1. Definimos la carpeta (dentro de "noticias") y el nombre del archivo
+    carpeta_destino = "noticias/economia-internacional"
     fecha_hoy = datetime.now().strftime("%Y-%m-%d")
     nombre_archivo = f"{fecha_hoy}.json"
     
-    # Nos aseguramos de que la carpeta exista
+    # Nos aseguramos de que la carpeta exista (creará "noticias" y la subcarpeta si no existen)
     os.makedirs(carpeta_destino, exist_ok=True)
     
-    # Armamos la ruta completa (ej. economia-argentina/2026-07-14.json)
+    # Armamos la ruta completa (ej. noticias/economia-internacional/2026-07-14.json)
     ruta_completa = os.path.join(carpeta_destino, nombre_archivo)
 
-    # 2. Búsqueda y filtrado: priorizamos economía, alejamos política y elecciones
-    query = 'economía argentina -"política" -"elecciones" -"congreso" -"interna" -"corrupción"'
+    # 2. Búsqueda y filtrado: priorizamos economía internacional y mercados globales
+    query = 'economía internacional OR "mercados globales" -"argentina" -"fútbol" -"autos" -"política local"'
     url = f"https://news.google.com/rss/search?q={urllib.parse.quote_plus(query)}&hl=es-419&gl=AR&ceid=AR:es-419"
     
     feed = feedparser.parse(url)
@@ -53,7 +53,7 @@ def obtener_noticias_economia():
     with open(ruta_completa, 'w', encoding='utf-8') as f:
         json.dump(noticias_seleccionadas, f, ensure_ascii=False, indent=4)
         
-    print(f"¡Listo! Archivo de economía generado en: {ruta_completa}")
+    print(f"¡Listo! Archivo de economía internacional generado en: {ruta_completa}")
 
 if __name__ == "__main__":
-    obtener_noticias_economia()
+    obtener_noticias_economia_internacional()
