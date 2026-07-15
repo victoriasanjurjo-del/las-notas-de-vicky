@@ -2,16 +2,15 @@ name: Actualizar Noticias Diariamente
 
 on:
   schedule:
-    # Se ejecuta a las 12:00 UTC (9:00 AM en Argentina)
-    - cron: '0 12 * * *'
-  workflow_dispatch: # Permite ejecutarlo manualmente desde la web de GitHub
+    # 09:00 UTC equivale a las 06:00 AM en Argentina (UTC-3)
+    - cron: '0 9 * * *'
+  workflow_dispatch: # Sigue permitiendo la ejecución manual por si quieres forzar una actualización
 
-# Damos permisos explícitos para que el bot pueda escribir en tu repositorio
 permissions:
   contents: write
 
 jobs:
-  ejecutar-script:
+  ejecutar-scripts:
     runs-on: ubuntu-latest
     steps:
       - name: Clonar el repositorio
@@ -25,18 +24,27 @@ jobs:
       - name: Instalar dependencias
         run: pip install feedparser
 
-      - name: Ejecutar el script
-        run: python politica-argentina.py
+      - name: Ejecutar todos los scripts de scraping
+        run: |
+          python politica-argentina.py
+          python economia-argentina.py
+          python politica-internacional.py
+          python futbol-argentino.py
+          python autos.py
+          python economica-internacional.py
+          python futbol-europeo.py
+          python futbol-africano.py
+          python motos.py
 
-      - name: Hacer commit y push del nuevo archivo JSON
+      - name: Hacer commit y push de los nuevos archivos JSON
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Añadimos la carpeta específica donde se guardan los JSON
-          git add politica-argentina/
+          # "git add ." detectará automáticamente todas las carpetas nuevas y los JSON de hoy
+          git add .
           
-          # Hacemos el commit. Si no hay cambios (raro en este caso), no falla.
-          git commit -m "Automatización: Agrega JSON de noticias del día" || echo "Sin cambios para commitear"
+          # Realiza el commit. Si por algún motivo un día falla una extracción, el script no se rompe
+          git commit -m "Automatización: Extracción diaria de noticias completada" || echo "Sin cambios para commitear"
           
           git push
