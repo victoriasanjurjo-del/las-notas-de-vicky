@@ -6,6 +6,9 @@
     <title>Mi Espacio</title>
     <!-- Cargamos FontAwesome para los íconos blancos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Cargamos Marked.js para interpretar el Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Enlazamos nuestro archivo CSS externo -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,10 +16,8 @@
     <!-- Sidebar de Navegación -->
     <nav class="sidebar">
         <a href="#inicio" title="Inicio"><i class="fas fa-home"></i></a>
-        <a href="#habilidades" title="Habilidades"><i class="fas fa-bolt"></i></a>
-        <a href="#idiomas" title="Idiomas"><i class="fas fa-comment-dots"></i></a>
-        <a href="#proyectos" title="Proyectos"><i class="fab fa-github"></i></a>
-        <a href="#blog" title="Blog"><i class="fas fa-info-circle"></i></a>
+        <a href="#ingles" title="Inglés"><i class="fas fa-comment-dots"></i></a>
+        <a href="#blog" title="Blog"><i class="fas fa-list"></i></a>
     </nav>
 
     <main>
@@ -25,41 +26,24 @@
             <div class="home-content">
                 <h1>¡Bienvenidos a mi espacio!</h1>
                 <div class="photo-frame">
-                    <img src="assets/photo.jpg" alt="Mi foto">
+                    <img src="assets/photo.png" alt="Mi foto">
                 </div>
             </div>
         </section>
 
-        <!-- Sección Habilidades -->
-        <section id="habilidades">
-            <h2>Habilidades</h2>
-            <div class="skills-grid">
-                <div class="glass-card skill-card">
-                    <i class="fab fa-html5"></i>
-                    <span>HTML5</span>
-                </div>
-                <div class="glass-card skill-card">
-                    <i class="fab fa-css3-alt"></i>
-                    <span>CSS3</span>
-                </div>
-                <div class="glass-card skill-card">
-                    <i class="fab fa-js"></i>
-                    <span>JavaScript</span>
-                </div>
-                <div class="glass-card skill-card">
-                    <i class="fab fa-python"></i>
-                    <span>Python</span>
-                </div>
+        <!-- Sección Inglés -->
+        <section id="ingles">
+            <div class="blog-header">
+                <h2>Inglés</h2>
+                <button id="btn-abrir-modal-ingles" class="btn-subir">
+                    <i class="fas fa-file-upload"></i> Subir Práctica
+                </button>
             </div>
-        </section>
-
-        <!-- Sección Idiomas -->
-        <section id="idiomas">
-            <h2>Idiomas</h2>
-            <div class="langs-grid">
+            
+            <div class="langs-grid" style="margin-bottom: 40px;">
                 <!-- Inglés: A1, A2, B1, B2 -->
                 <div class="glass-card lang-card">
-                    <h3>Inglés</h3>
+                    <h3>Nivel Actual</h3>
                     <div class="cefr-levels">
                         <div class="level-dash active"></div>
                         <div class="level-dash active"></div>
@@ -69,66 +53,162 @@
                         <div class="level-dash"></div>
                     </div>
                 </div>
-                <!-- Italiano: A1, A2 -->
-                <div class="glass-card lang-card">
-                    <h3>Italiano</h3>
-                    <div class="cefr-levels">
-                        <div class="level-dash active"></div>
-                        <div class="level-dash active"></div>
-                        <div class="level-dash"></div>
-                        <div class="level-dash"></div>
-                        <div class="level-dash"></div>
-                        <div class="level-dash"></div>
-                    </div>
-                </div>
-                <!-- Plantilla para el resto (solo A1) -->
-                <!-- Francés, Portugués, Alemán, Neerlandés, Noruego, Sueco, Danés, Polaco, Checo, Rumano, Ruso -->
-                <script>
-                    const idiomasA1 = ['Francés', 'Portugués', 'Alemán', 'Neerlandés', 'Noruego', 'Sueco', 'Danés', 'Polaco', 'Checo', 'Rumano', 'Ruso'];
-                    idiomasA1.forEach(idioma => {
-                        document.write(`
-                        <div class="glass-card lang-card">
-                            <h3>${idioma}</h3>
-                            <div class="cefr-levels">
-                                <div class="level-dash active"></div>
-                                <div class="level-dash"></div>
-                                <div class="level-dash"></div>
-                                <div class="level-dash"></div>
-                                <div class="level-dash"></div>
-                                <div class="level-dash"></div>
-                            </div>
-                        </div>
-                        `);
-                    });
-                </script>
             </div>
-        </section>
 
-        <!-- Sección Proyectos -->
-        <section id="proyectos">
-            <h2>Próximamente más proyectos.</h2>
+            <!-- Espacio reservado para las prácticas de inglés -->
+            <div id="ingles-content" class="blog-grid"></div>
         </section>
 
         <!-- Sección Blog -->
         <section id="blog">
             <div class="blog-header">
                 <h2>Blog</h2>
-                <a href="nuevo-articulo.html" class="btn-subir">
-                    <i class="fas fa-plus"></i> Subir
-                </a>
+                <!-- Botón que activa el modal -->
+                <button id="btn-abrir-modal-blog" class="btn-subir">
+                    <i class="fas fa-file-upload"></i> Subir Artículo
+                </button>
             </div>
+            <!-- Espacio reservado para los artículos del blog -->
+            <div id="blog-content" class="blog-grid"></div>
         </section>
     </main>
 
-    <!-- Script para scroll suave al hacer clic en la sidebar -->
+    <!-- Estructura del Modal Flotante de Subida (Oculto por defecto) -->
+    <div class="modal-overlay" id="upload-modal">
+        <div class="upload-modal-card">
+            <i class="fas fa-times close-modal" id="btn-cerrar-modal"></i>
+            <h3>Subir Archivo</h3>
+            <p style="opacity: 0.8; font-size: 0.9rem;">Sube tu archivo en formato Markdown (.md)</p>
+            
+            <div class="file-input-wrapper">
+                <label class="custom-file-upload">
+                    <input type="file" accept=".md" id="markdown-file-input">
+                    <i class="fas fa-file-alt"></i> Elegir archivo .md
+                </label>
+            </div>
+            
+            <button class="btn-subir" id="btn-guardar-archivo" style="width: 100%; justify-content: center;">
+                Subir
+            </button>
+        </div>
+    </div>
+
+    <!-- Estructura del Modal de Lectura (Oculto por defecto) -->
+    <div class="modal-overlay" id="read-modal">
+        <div class="upload-modal-card read-modal-card">
+            <i class="fas fa-times close-modal" id="btn-cerrar-read-modal"></i>
+            <div id="read-modal-content" class="markdown-body">
+                <!-- El contenido HTML generado desde el Markdown irá aquí -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts de Interacción -->
     <script>
+        // Lógica de navegación suave (Sidebar)
         document.querySelectorAll('.sidebar a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href').substring(1);
                 const targetSection = document.getElementById(targetId);
-                targetSection.scrollIntoView({ behavior: 'smooth' });
+                if(targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
             });
+        });
+
+        // Elementos del DOM
+        const modalSubida = document.getElementById('upload-modal');
+        const btnCerrarModal = document.getElementById('btn-cerrar-modal');
+        const fileInput = document.getElementById('markdown-file-input');
+        const btnGuardarArchivo = document.getElementById('btn-guardar-archivo');
+        
+        const btnAbrirModalBlog = document.getElementById('btn-abrir-modal-blog');
+        const btnAbrirModalIngles = document.getElementById('btn-abrir-modal-ingles');
+        
+        const blogContent = document.getElementById('blog-content');
+        const inglesContent = document.getElementById('ingles-content');
+
+        // Modales de Lectura
+        const readModal = document.getElementById('read-modal');
+        const btnCerrarReadModal = document.getElementById('btn-cerrar-read-modal');
+        const readModalContent = document.getElementById('read-modal-content');
+
+        // Variable para saber en qué sección se hizo clic (Blog o Inglés)
+        let currentUploadTarget = null;
+
+        // Abrir Modal de Subida para Blog
+        btnAbrirModalBlog.addEventListener('click', () => {
+            currentUploadTarget = blogContent;
+            modalSubida.classList.add('active');
+        });
+
+        // Abrir Modal de Subida para Inglés
+        btnAbrirModalIngles.addEventListener('click', () => {
+            currentUploadTarget = inglesContent;
+            modalSubida.classList.add('active');
+        });
+
+        // Cerrar Modales
+        btnCerrarModal.addEventListener('click', () => {
+            modalSubida.classList.remove('active');
+        });
+        btnCerrarReadModal.addEventListener('click', () => {
+            readModal.classList.remove('active');
+        });
+
+        // Cerrar haciendo clic en el fondo
+        window.addEventListener('click', (e) => {
+            if (e.target === modalSubida) modalSubida.classList.remove('active');
+            if (e.target === readModal) readModal.classList.remove('active');
+        });
+
+        // Lógica real de captura, lectura y renderizado del archivo .md
+        btnGuardarArchivo.addEventListener('click', () => {
+            if(fileInput.files.length > 0 && currentUploadTarget) {
+                const file = fileInput.files[0];
+                const reader = new FileReader(); 
+
+                reader.onload = function(e) {
+                    const textoMarkdown = e.target.result;
+                    
+                    const lineas = textoMarkdown.split('\n');
+                    let titulo = "Documento sin título";
+                    let extracto = "";
+                    
+                    for(let linea of lineas) {
+                        if(linea.startsWith('# ') && titulo === "Documento sin título") {
+                            titulo = linea.replace('# ', '').trim();
+                        } 
+                        else if (linea.trim().length > 30 && extracto === "") {
+                            extracto = linea.replace(/[*_#`>]/g, '').trim();
+                        }
+                    }
+
+                    const tarjeta = document.createElement('div');
+                    tarjeta.className = 'glass-card blog-card';
+                    tarjeta.innerHTML = `
+                        <h3>${titulo}</h3>
+                        <p>${extracto}...</p>
+                    `;
+
+                    tarjeta.addEventListener('click', () => {
+                        readModalContent.innerHTML = marked.parse(textoMarkdown);
+                        readModal.classList.add('active');
+                    });
+
+                    // Inserta la tarjeta en la sección correspondiente (Blog o Inglés)
+                    currentUploadTarget.prepend(tarjeta);
+
+                    modalSubida.classList.remove('active');
+                    fileInput.value = ''; 
+                };
+                
+                reader.readAsText(file);
+
+            } else {
+                alert("Por favor, selecciona un archivo .md primero.");
+            }
         });
     </script>
 </body>

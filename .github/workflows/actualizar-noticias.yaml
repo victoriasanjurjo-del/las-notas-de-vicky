@@ -26,14 +26,9 @@ jobs:
 
       - name: Ejecutar todos los scripts de scraping
         run: |
-          python politica-argentina.py
-          python economia-argentina.py
-          python politica-internacional.py
           python futbol-argentino.py
           python autos.py
-          python economica-internacional.py
           python futbol-europeo.py
-          python futbol-africano.py
           python motos.py
 
       - name: Hacer commit y push de los nuevos archivos JSON
