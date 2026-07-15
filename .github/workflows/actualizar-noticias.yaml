@@ -1,0 +1,42 @@
+name: Actualizar Noticias Diariamente
+
+on:
+  schedule:
+    # Se ejecuta a las 12:00 UTC (9:00 AM en Argentina)
+    - cron: '0 12 * * *'
+  workflow_dispatch: # Permite ejecutarlo manualmente desde la web de GitHub
+
+# Damos permisos explícitos para que el bot pueda escribir en tu repositorio
+permissions:
+  contents: write
+
+jobs:
+  ejecutar-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependencias
+        run: pip install feedparser
+
+      - name: Ejecutar el script
+        run: python politica-argentina.py
+
+      - name: Hacer commit y push del nuevo archivo JSON
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Añadimos la carpeta específica donde se guardan los JSON
+          git add politica-argentina/
+          
+          # Hacemos el commit. Si no hay cambios (raro en este caso), no falla.
+          git commit -m "Automatización: Agrega JSON de noticias del día" || echo "Sin cambios para commitear"
+          
+          git push
